@@ -1,0 +1,15 @@
+.venv/
+.idea/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+*.parquet
+*.csv
+*.npz
+
+data/raw/goes/
+models/*.joblib
+models/*.json
+
+!*.manifest.json

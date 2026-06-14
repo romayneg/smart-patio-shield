@@ -1,0 +1,27 @@
+{
+  "data_file": "image_labels.parquet",
+  "file_sha256": "a0bdffa25776710021474c86c7563428a0bd7e57e88d83bbd5fd0850f55613f7",
+  "built_at_utc": "2026-06-14T07:09:56.725719+00:00",
+  "source_file": "patio_features.parquet",
+  "row_count": 87696,
+  "split_boundaries": {
+    "train_end": "2024-10-30 20:54:00",
+    "val_end": "2025-07-31 21:57:00",
+    "data_start": "2021-05-01 00:00:00",
+    "data_end": "2026-05-01 23:00:00",
+    "train_rows": "61386",
+    "val_rows": "13154",
+    "test_rows": "13156"
+  },
+  "split_counts": {
+    "train": 61386,
+    "test": 13156,
+    "val": 13154
+  },
+  "positive_rate_by_split": {
+    "test": 0.1003,
+    "train": 0.0902,
+    "val": 0.091
+  },
+  "note": "Keys match GOES .npz day-file keys: 'location|ISO-timestamp'."
+}

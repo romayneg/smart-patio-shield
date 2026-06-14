@@ -1,0 +1,17 @@
+{
+  "data_file": "noaa_oni_monthly.parquet",
+  "file_sha256": "d82cd4dd89f032ee322ce14321ffe17fe19c064e3864b9906e8b4a3820b5be39",
+  "file_size_bytes": 14087,
+  "fetched_at_utc": "2026-05-28T06:10:04.583732+00:00",
+  "source_url": "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php",
+  "row_count": 915,
+  "year_range": [
+    1950,
+    2026
+  ],
+  "month_range": {
+    "min": "1950-01-01",
+    "max": "2026-03-01"
+  },
+  "description": "Oceanic Ni\u00f1o Index (ONI): 3-month running mean of ERSST.v5 SST anomalies in the Ni\u00f1o 3.4 region (5\u00b0N-5\u00b0S, 120\u00b0-170\u00b0W). Each month is assigned the ONI value of the 3-month season centered on it."
+}

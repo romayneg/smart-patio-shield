@@ -1,0 +1,50 @@
+{
+  "data_file": "weather_jamaica_2021-05-01_to_2026-05-01.parquet",
+  "file_sha256": "bb915b1d20d0fb893c96b531bdd8a24a2a90c70ea820d4bcae4307dff777d636",
+  "file_size_bytes": 2000748,
+  "fetched_at_utc": "2026-05-28T00:55:42.656058+00:00",
+  "api_endpoint": "https://archive-api.open-meteo.com/v1/archive",
+  "snapshot_start_date": "2021-05-01",
+  "snapshot_end_date": "2026-05-01",
+  "locations": {
+    "kingston": {
+      "lat": 17.9714,
+      "lon": -76.7945
+    },
+    "montego_bay": {
+      "lat": 18.47298,
+      "lon": -77.92134
+    }
+  },
+  "hourly_variables": [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "apparent_temperature",
+    "precipitation",
+    "rain",
+    "pressure_msl",
+    "surface_pressure",
+    "cloud_cover",
+    "cloud_cover_low",
+    "cloud_cover_mid",
+    "cloud_cover_high",
+    "wind_speed_10m",
+    "wind_direction_10m",
+    "wind_gusts_10m",
+    "et0_fao_evapotranspiration",
+    "vapour_pressure_deficit",
+    "weather_code",
+    "sunshine_duration",
+    "boundary_layer_height"
+  ],
+  "row_count": 87696,
+  "actual_time_range": {
+    "min": "2021-05-01 00:00:00",
+    "max": "2026-05-01 23:00:00"
+  },
+  "row_count_per_location": {
+    "kingston": 43848,
+    "montego_bay": 43848
+  }
+}
