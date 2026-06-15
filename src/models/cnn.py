@@ -23,6 +23,10 @@ from sklearn.metrics import average_precision_score
 from torch.utils.data import DataLoader
 from torchvision import models
 
+import json
+from datetime import datetime, timezone
+from pathlib import Path
+
 
 def build_model(in_channels: int) -> nn.Module:
     """
@@ -74,7 +78,7 @@ def train_model(
     """
     Train with class-weighted BCE + PR-AUC early stopping.
     Returns (best_model, history).
-    """ 
+    """
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     print(f"Training on {device}, {in_channels}-channel input")
 
@@ -121,3 +125,39 @@ def train_model(
 
     model.load_state_dict(best_state)
     return model, history
+
+
+def save_model(model, history, in_channels, channels, metrics, out_dir):
+    """
+    Persist a trained CNN + a reproducibility manifest.
+
+    out_dir should be a Drive path on Colab
+    Saves:
+      - <name>.pt              : model weights (state_dict)
+      - <name>.manifest.json   : architecture, channels, metrics, training history
+    """
+    out_dir = Path(out_dir)
+    out_dir.mkdir(parents=True, exist_ok=True)
+
+    tag = "ir_only" if len(channels) == 2 else "ir_visible"
+    name = f"cnn_resnet18_{tag}"
+
+    weights_path = out_dir / f"{name}.pt"
+    torch.save(model.state_dict(), weights_path)
+
+    manifest = {
+        "model_name": name,
+        "architecture": "resnet18 (ImageNet-pretrained, adapted)",
+        "in_channels": in_channels,
+        "channels": channels,
+        "trained_at_utc": datetime.now(timezone.utc).isoformat(),
+        "weights_file": weights_path.name,
+        "metrics": metrics,
+        "training_history": history,
+        "best_epoch": max(range(len(history)), key=lambda i: history[i]["val_pr_auc"]),
+    }
+    with open(out_dir / f"{name}.manifest.json", "w") as f:
+        json.dump(manifest, f, indent=2, default=str)
+
+    print(f"Saved {name}.pt and manifest to {out_dir}")
+    return weights_path
