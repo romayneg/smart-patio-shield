@@ -1,0 +1,632 @@
+{
+  "stats": {
+    "expected_days": 1826,
+    "present_days": 1826,
+    "missing_days": 0,
+    "partial_days": 88,
+    "total_patches": 87648,
+    "patches_blank_any": 354,
+    "patches_blank_all": 257,
+    "pct_blank_any": 0.404,
+    "pct_blank_all": 0.293
+  },
+  "missing_days": [],
+  "partial_days": {
+    "2021-05-29": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-06-15": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-06-29": {
+      "patches": 48,
+      "blank_any_channel": 14,
+      "blank_all_channels": 14,
+      "short_count": 0,
+      "frac_affected": 0.292
+    },
+    "2021-07-21": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-07-27": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-09-04": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-09-11": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-10-02": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2021-12-09": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2021-12-20": {
+      "patches": 48,
+      "blank_any_channel": 6,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.125
+    },
+    "2022-01-04": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-01-14": {
+      "patches": 48,
+      "blank_any_channel": 6,
+      "blank_all_channels": 6,
+      "short_count": 0,
+      "frac_affected": 0.125
+    },
+    "2022-02-16": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-03-15": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-03-16": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-04-18": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2022-04-25": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-04-26": {
+      "patches": 48,
+      "blank_any_channel": 3,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.062
+    },
+    "2022-05-19": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-05-24": {
+      "patches": 48,
+      "blank_any_channel": 12,
+      "blank_all_channels": 12,
+      "short_count": 0,
+      "frac_affected": 0.25
+    },
+    "2022-05-25": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-06-11": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 1,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-07-20": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-08-29": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-09-03": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-09-13": {
+      "patches": 48,
+      "blank_any_channel": 20,
+      "blank_all_channels": 20,
+      "short_count": 0,
+      "frac_affected": 0.417
+    },
+    "2022-10-01": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 1,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-11-07": {
+      "patches": 48,
+      "blank_any_channel": 10,
+      "blank_all_channels": 10,
+      "short_count": 0,
+      "frac_affected": 0.208
+    },
+    "2022-11-16": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 4,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2022-11-17": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2022-12-01": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2022-12-24": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-03-08": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-04-08": {
+      "patches": 48,
+      "blank_any_channel": 14,
+      "blank_all_channels": 14,
+      "short_count": 0,
+      "frac_affected": 0.292
+    },
+    "2023-05-02": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-05-26": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-06-10": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 1,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-09-11": {
+      "patches": 48,
+      "blank_any_channel": 10,
+      "blank_all_channels": 10,
+      "short_count": 0,
+      "frac_affected": 0.208
+    },
+    "2023-10-17": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2023-11-17": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-11-28": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-12-04": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-12-07": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2023-12-16": {
+      "patches": 48,
+      "blank_any_channel": 22,
+      "blank_all_channels": 8,
+      "short_count": 0,
+      "frac_affected": 0.458
+    },
+    "2024-01-22": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2024-01-23": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-02-15": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 4,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2024-03-20": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-05-08": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-05-12": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-05-19": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-05-29": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-06-10": {
+      "patches": 48,
+      "blank_any_channel": 1,
+      "blank_all_channels": 1,
+      "short_count": 0,
+      "frac_affected": 0.021
+    },
+    "2024-07-02": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-07-08": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-09-02": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-09-04": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-09-08": {
+      "patches": 48,
+      "blank_any_channel": 14,
+      "blank_all_channels": 14,
+      "short_count": 0,
+      "frac_affected": 0.292
+    },
+    "2024-09-09": {
+      "patches": 48,
+      "blank_any_channel": 10,
+      "blank_all_channels": 10,
+      "short_count": 0,
+      "frac_affected": 0.208
+    },
+    "2024-09-28": {
+      "patches": 48,
+      "blank_any_channel": 22,
+      "blank_all_channels": 22,
+      "short_count": 0,
+      "frac_affected": 0.458
+    },
+    "2024-09-29": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-09-30": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-10-02": {
+      "patches": 48,
+      "blank_any_channel": 10,
+      "blank_all_channels": 8,
+      "short_count": 0,
+      "frac_affected": 0.208
+    },
+    "2024-10-04": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-10-16": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2024-11-15": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 4,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2024-11-17": {
+      "patches": 48,
+      "blank_any_channel": 6,
+      "blank_all_channels": 6,
+      "short_count": 0,
+      "frac_affected": 0.125
+    },
+    "2024-12-03": {
+      "patches": 48,
+      "blank_any_channel": 8,
+      "blank_all_channels": 8,
+      "short_count": 0,
+      "frac_affected": 0.167
+    },
+    "2024-12-06": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 4,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2025-01-20": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 1,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-01-31": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-02-01": {
+      "patches": 48,
+      "blank_any_channel": 6,
+      "blank_all_channels": 4,
+      "short_count": 0,
+      "frac_affected": 0.125
+    },
+    "2025-03-06": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-04-11": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-04-14": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-06-01": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-06-13": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-06-29": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-07-08": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-09-01": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-09-15": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-09-22": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-09-30": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2025-12-18": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2026-01-19": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2026-01-27": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.042
+    },
+    "2026-02-23": {
+      "patches": 48,
+      "blank_any_channel": 4,
+      "blank_all_channels": 0,
+      "short_count": 0,
+      "frac_affected": 0.083
+    },
+    "2026-04-13": {
+      "patches": 48,
+      "blank_any_channel": 2,
+      "blank_all_channels": 2,
+      "short_count": 0,
+      "frac_affected": 0.042
+    }
+  }
+}
