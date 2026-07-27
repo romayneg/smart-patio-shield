@@ -151,3 +151,52 @@ def report(name, y, p, threshold=0.5):
     print(f"{name:34s} PR-AUC {ap:.4f}   "
           f"recall {tp/(tp+fn):.3f}  precision {tp/(tp+fp):.3f}")
     return {"name": name, "pr_auc": float(ap), "confusion_matrix": cm.tolist()}
+
+# ---------------- out-of-fold stacking ----------------
+def oof_tabular_predictions(model_path, manifest_path, n_splits=5):
+    """
+    Out-of-fold tabular predictions over the training period, using
+    expanding-window time-series CV.
+
+    Why: the meta-learner was previously fitted on validation-set probabilities
+    from base models that had themselves been early-stopped on that validation
+    set. Those probabilities are optimistically biased, and there were only
+    ~13k of them. Out-of-fold predictions are unbiased (each row is predicted by
+    a model that never saw it) and there are ~5x more, which is the standard
+    protocol for stacking.
+    """
+    import json
+    import numpy as np
+    import pandas as pd
+    import xgboost as xgb
+
+    fit_columns = json.load(open(manifest_path))["feature_columns"]
+    df = pd.read_parquet(PROCESSED)
+    train, _, _, _ = time_based_split(df)
+
+    X, y, keys = _tabular_xy(train, fit_columns)
+    X = X.reset_index(drop=True)
+    n = len(X)
+
+    # Expanding-window folds: never train on data later than the fold being predicted.
+    bounds = [int(n * (i + 1) / (n_splits + 1)) for i in range(n_splits)]
+    oof = np.full(n, np.nan)
+
+    for i, start in enumerate(bounds):
+        end = bounds[i + 1] if i + 1 < len(bounds) else n
+        tr_idx = np.arange(0, start)
+        te_idx = np.arange(start, end)
+        if len(te_idx) == 0:
+            continue
+        spw = (y[tr_idx] == 0).sum() / max((y[tr_idx] == 1).sum(), 1)
+        m = xgb.XGBClassifier(
+            n_estimators=200, max_depth=6, learning_rate=0.1,
+            scale_pos_weight=spw, eval_metric="aucpr",
+            random_state=42, n_jobs=-1,
+        )
+        m.fit(X.iloc[tr_idx], y[tr_idx], verbose=False)
+        oof[te_idx] = m.predict_proba(X.iloc[te_idx])[:, 1]
+        print(f"  fold {i+1}: trained on {len(tr_idx):,} → predicted {len(te_idx):,}")
+
+    mask = ~np.isnan(oof)
+    return pd.DataFrame({"key": keys[mask], "p_tab": oof[mask], "y": y[mask]}), X[mask]
