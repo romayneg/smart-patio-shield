@@ -178,7 +178,7 @@ def oof_tabular_predictions(model_path, manifest_path, n_splits=5):
     X = X.reset_index(drop=True)
     n = len(X)
 
-    # Expanding-window folds: never train on data later than the fold being predicted.
+    # Expanding-window folds (never training on data later than the fold being predicted)
     bounds = [int(n * (i + 1) / (n_splits + 1)) for i in range(n_splits)]
     oof = np.full(n, np.nan)
 
