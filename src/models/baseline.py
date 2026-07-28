@@ -9,7 +9,7 @@ Loads processed features, applies the time-based train/val/test split,
 trains both models on identical data (NaN rows dropped for clean comparison),
 evaluates on train and val, and saves model artifacts + a training manifest.
 
-The TEST set is NOT touched here. It is held out for final evaluation only.
+The test set is not touched here. It is held out for final evaluation only.
 
 Run: python -m src.models.baseline    (from project root)
 """

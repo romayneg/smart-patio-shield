@@ -8,8 +8,8 @@ Joins two sources by the "location|ISO-timestamp" key:
   - labels + split from data/processed/image_labels.parquet
 
 Key design points:
-  - Only indexes patches that exist on disk AND have a label, for a given split
-    — so it works correctly even while the download is still in progress.
+  - Only indexes patches that exist on disk and have a label, for a given split,
+    so it works correctly even while the download is still in progress.
   - Channel selection is a constructor arg, enabling the IR-only vs IR+visible
     ablation without re-reading or duplicating data.
   - Per-channel normalization stats are computed once on the TRAIN split and
