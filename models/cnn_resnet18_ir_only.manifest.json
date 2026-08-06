@@ -1,0 +1,53 @@
+{
+  "model_name": "cnn_resnet18_ir_only",
+  "architecture": "resnet18 (ImageNet-pretrained, adapted)",
+  "in_channels": 2,
+  "channels": [
+    "C13",
+    "C09"
+  ],
+  "trained_at_utc": "2026-07-10T06:38:00.226222+00:00",
+  "weights_file": "cnn_resnet18_ir_only.pt",
+  "metrics": {
+    "val_pr_auc_best": 0.4272823751203777,
+    "best_epoch": 1
+  },
+  "training_history": [
+    {
+      "epoch": 0,
+      "train_loss": 0.9317617171947058,
+      "val_pr_auc": 0.3861612556745563
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.7865262630689344,
+      "val_pr_auc": 0.4272823751203777
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.7202158554404361,
+      "val_pr_auc": 0.41081354745697
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.6334581249049887,
+      "val_pr_auc": 0.33805909015355773
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5437279881043071,
+      "val_pr_auc": 0.36316639133609274
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.4582108986116328,
+      "val_pr_auc": 0.364546903875835
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.38352341932025125,
+      "val_pr_auc": 0.3614226501280604
+    }
+  ],
+  "best_epoch": 1
+}

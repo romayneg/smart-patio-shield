@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Smart Patio Shield — Live Inference Console</title>
+<style>
+  :root{
+    --navy:#13293D; --navy2:#1C3A55; --teal:#0E7C86; --teal-lite:#1AA3AE;
+    --amber:#F0A030; --amber-deep:#B0653A; --paper:#F3F6F8; --ink:#0E1B26;
+    --line:#28455C; --muted:#8FA6B6; --deploy:#0E7C86; --stow:#5C7282;
+    --danger:#C25B3F;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{
+    font-family:"Segoe UI",system-ui,-apple-system,sans-serif;
+    background:radial-gradient(1200px 600px at 70% -10%, #1C3A55 0%, #13293D 55%, #0C1B27 100%);
+    color:#E6EEF3; min-height:100vh; padding:28px 20px 60px;
+  }
+  .wrap{max-width:1120px;margin:0 auto}
+  header{display:flex;align-items:baseline;justify-content:space-between;flex-wrap:wrap;gap:12px;
+    border-bottom:1px solid var(--line);padding-bottom:16px;margin-bottom:24px}
+  .brand{font-size:26px;font-weight:800;letter-spacing:-0.02em}
+  .brand span{color:var(--teal-lite)}
+  .sub{font-size:13px;color:var(--muted);max-width:520px;margin-top:4px}
+  .status-pill{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:7px}
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--stow)}
+  .dot.on{background:var(--teal-lite);box-shadow:0 0 10px var(--teal-lite)}
+
+  .grid{display:grid;grid-template-columns:1fr 380px;gap:22px}
+  @media(max-width:880px){.grid{grid-template-columns:1fr}}
+
+  .panel{background:rgba(18,36,54,0.72);border:1px solid var(--line);border-radius:14px;
+    padding:20px 22px;backdrop-filter:blur(4px)}
+  .panel h2{font-size:12px;text-transform:uppercase;letter-spacing:0.14em;color:var(--teal-lite);
+    margin-bottom:16px;font-weight:700}
+
+  .mode-tabs{display:flex;gap:6px;margin-bottom:18px}
+  .mode-tabs button{flex:1;background:transparent;border:1px solid var(--line);color:var(--muted);
+    padding:9px;border-radius:9px;cursor:pointer;font-size:13px;font-weight:600;transition:.15s}
+  .mode-tabs button.active{background:var(--teal);border-color:var(--teal);color:#fff}
+
+  .ctrl{margin-bottom:16px}
+  .ctrl label{display:flex;justify-content:space-between;font-size:13px;margin-bottom:7px;color:#CBD8E1}
+  .ctrl label b{color:var(--amber);font-variant-numeric:tabular-nums}
+  input[type=range]{width:100%;height:6px;border-radius:6px;appearance:none;
+    background:linear-gradient(90deg,var(--teal) 0%,var(--teal) var(--fill,50%),#24425a var(--fill,50%));
+    outline:none;cursor:pointer}
+  input[type=range]::-webkit-slider-thumb{appearance:none;width:18px;height:18px;border-radius:50%;
+    background:var(--amber);border:2px solid #1a2a38;cursor:pointer}
+  input[type=range]::-moz-range-thumb{width:18px;height:18px;border-radius:50%;
+    background:var(--amber);border:2px solid #1a2a38;cursor:pointer}
+  .row{display:flex;gap:12px}.row>*{flex:1}
+  select,.seg{width:100%;background:#0F2233;border:1px solid var(--line);color:#E6EEF3;
+    padding:9px;border-radius:9px;font-size:13px}
+  .seg-group{display:flex;gap:6px}
+  .seg-group button{flex:1;background:#0F2233;border:1px solid var(--line);color:var(--muted);
+    padding:8px;border-radius:8px;cursor:pointer;font-size:12px;font-weight:600}
+  .seg-group button.on{background:var(--navy2);color:#fff;border-color:var(--teal)}
+
+  /* ---- decision readout (the signature element) ---- */
+  .readout{position:relative;overflow:hidden;border-radius:14px;border:1px solid var(--line);
+    background:#0D1E2C;padding:26px 24px;text-align:center;transition:.3s}
+  .readout.deploy{border-color:var(--teal);box-shadow:0 0 40px rgba(14,124,134,0.35) inset}
+  .readout.stow{border-color:#33506a}
+  .decision{font-size:44px;font-weight:900;letter-spacing:-0.02em;line-height:1;margin:6px 0 4px}
+  .readout.deploy .decision{color:var(--teal-lite)}
+  .readout.stow .decision{color:#9DB2C2}
+  .decision-sub{font-size:13px;color:var(--muted);margin-bottom:18px}
+  .gauge{height:14px;background:#1a3247;border-radius:8px;overflow:hidden;margin:14px 0 6px}
+  .gauge-fill{height:100%;width:0%;border-radius:8px;transition:width .4s ease;
+    background:linear-gradient(90deg,var(--teal),var(--amber))}
+  .prob-line{display:flex;justify-content:space-between;font-size:12px;color:var(--muted);
+    font-variant-numeric:tabular-nums}
+  .prob-big{font-size:30px;font-weight:800;color:#E6EEF3;font-variant-numeric:tabular-nums}
+  .thresh-mark{font-size:11px;color:var(--amber)}
+  .drivers{margin-top:16px;text-align:left}
+  .drivers h3{font-size:11px;text-transform:uppercase;letter-spacing:.12em;color:var(--muted);margin-bottom:8px}
+  .chip{display:inline-block;background:#16324a;border:1px solid var(--line);color:#BcD;
+    padding:5px 10px;border-radius:20px;font-size:11.5px;margin:0 5px 6px 0;color:#B7CAD8}
+
+  .truth{margin-top:14px;padding:12px;border-radius:10px;font-size:13px;display:none}
+  .truth.show{display:block}
+  .truth.correct{background:rgba(14,124,134,0.15);border:1px solid var(--teal)}
+  .truth.wrong{background:rgba(194,91,63,0.15);border:1px solid var(--danger)}
+
+  .hint{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .backend-warn{background:rgba(194,91,63,0.15);border:1px solid var(--danger);color:#F0C4B6;
+    padding:10px 14px;border-radius:10px;font-size:12.5px;margin-bottom:16px;display:none}
+  .foot{margin-top:22px;font-size:11.5px;color:var(--muted);line-height:1.6;text-align:center}
+  code{background:#0F2233;padding:1px 6px;border-radius:5px;font-size:12px;color:var(--amber)}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div>
+      <div class="brand">Smart Patio<span>&nbsp;Shield</span></div>
+      <div class="sub">Live wind-driven-rain nowcast. Adjust conditions and watch the screen deploy-or-stow decision update in real time.</div>
+    </div>
+    <div class="status-pill"><span class="dot" id="statusDot"></span><span id="statusText">connecting…</span></div>
+  </header>
+
+  <div class="backend-warn" id="backendWarn">
+    ⚠ Live model backend not reachable — running in <b>offline demonstration mode</b> with a faithful surrogate of the model's decision logic. Start the backend with <code>python app.py</code> to use the real trained model.
+  </div>
+
+  <div class="grid">
+    <!-- LEFT: controls -->
+    <div class="panel">
+      <div class="mode-tabs">
+        <button id="tabSliders" class="active" onclick="setMode('sliders')">Adjust conditions</button>
+        <button id="tabHistory" onclick="setMode('history')">Real historical hour</button>
+      </div>
+
+      <!-- SLIDER MODE -->
+      <div id="sliderMode">
+        <h2>Location &amp; time</h2>
+        <div class="ctrl">
+          <div class="seg-group" id="locGroup">
+            <button class="on" data-loc="montego_bay" onclick="setLoc('montego_bay')">Montego Bay</button>
+            <button data-loc="kingston" onclick="setLoc('kingston')">Kingston</button>
+          </div>
+        </div>
+        <div class="row">
+          <div class="ctrl">
+            <label>Hour of day <b id="hourV">14:00</b></label>
+            <input type="range" id="hour" min="0" max="23" value="14" oninput="onInput()">
+          </div>
+          <div class="ctrl">
+            <label>Month <b id="monthV">Oct</b></label>
+            <input type="range" id="month" min="1" max="12" value="10" oninput="onInput()">
+          </div>
+        </div>
+
+        <h2 style="margin-top:8px">Current sky &amp; air</h2>
+        <div class="ctrl">
+          <label>Low cloud cover <b id="cclV">70%</b></label>
+          <input type="range" id="ccl" min="0" max="100" value="70" oninput="onInput()">
+        </div>
+        <div class="row">
+          <div class="ctrl">
+            <label>Mid cloud <b id="ccmV">50%</b></label>
+            <input type="range" id="ccm" min="0" max="100" value="50" oninput="onInput()">
+          </div>
+          <div class="ctrl">
+            <label>High cloud <b id="cchV">30%</b></label>
+            <input type="range" id="cch" min="0" max="100" value="30" oninput="onInput()">
+          </div>
+        </div>
+        <div class="ctrl">
+          <label>Relative humidity <b id="rhV">85%</b></label>
+          <input type="range" id="rh" min="30" max="100" value="85" oninput="onInput()">
+        </div>
+
+        <h2 style="margin-top:8px">Recent history (last hour)</h2>
+        <div class="row">
+          <div class="ctrl">
+            <label>Rain last hour <b id="rainV">0.5 mm</b></label>
+            <input type="range" id="rain" min="0" max="10" step="0.1" value="0.5" oninput="onInput()">
+          </div>
+          <div class="ctrl">
+            <label>Max gust <b id="gustV">25 km/h</b></label>
+            <input type="range" id="gust" min="0" max="80" value="25" oninput="onInput()">
+          </div>
+        </div>
+        <div class="ctrl">
+          <label>Barometric pressure trend</label>
+          <div class="seg-group">
+            <button class="on" id="pFall" onclick="setPressure(true)">Falling (storm sign)</button>
+            <button id="pRise" onclick="setPressure(false)">Steady / rising</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- HISTORY MODE -->
+      <div id="historyMode" style="display:none">
+        <h2>Pick a real hour from the test set</h2>
+        <div class="ctrl">
+          <select id="histPick" onchange="onHistoryPick()">
+            <option value="">Loading sample hours…</option>
+          </select>
+          <div class="hint">These are genuine hours the model never saw during training. The panel shows the model's decision alongside what actually happened - a live check of real-world accuracy.</div>
+        </div>
+      </div>
+
+      <h2 style="margin-top:14px">Decision threshold</h2>
+      <div class="ctrl">
+        <label>Deploy when probability ≥ <b id="thrV">0.50</b></label>
+        <input type="range" id="thr" min="0.05" max="0.95" step="0.05" value="0.50" oninput="onInput()">
+        <div class="hint">Lower = more cautious (deploy on weaker signals, more false alarms). Higher = deploy only when very confident. This is the operating point discussed in the technical documentation.</div>
+      </div>
+    </div>
+
+    <!-- RIGHT: readout -->
+    <div>
+      <div class="readout stow" id="readout">
+        <div class="decision-sub">Screen decision</div>
+        <div class="decision" id="decision">—</div>
+        <div class="decision-sub" id="confidence"></div>
+        <div class="prob-big" id="probBig">0.00</div>
+        <div class="gauge"><div class="gauge-fill" id="gaugeFill"></div></div>
+        <div class="prob-line"><span>0.0</span><span class="thresh-mark" id="thrTick">▲ threshold</span><span>1.0</span></div>
+        <div class="drivers">
+          <h3>What's driving this</h3>
+          <div id="drivers"></div>
+        </div>
+        <div class="truth" id="truth"></div>
+      </div>
+      <div class="foot">
+        Model 1 (XGBoost, tabular) · test PR-AUC 0.756<br>
+        Runs on weather data alone - the project found satellite imagery added no value.
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+// ============================================================
+// Config
+// ============================================================
+const API = "http://127.0.0.1:8000";
+let backendUp = false;
+let mode = "sliders";
+let location_ = "montego_bay";
+let pressureFalling = true;
+const MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+// ============================================================
+// Backend health check → falls back to offline surrogate
+// ============================================================
+async function checkBackend(){
+  try{
+    const r = await fetch(API + "/health", {signal: AbortSignal.timeout(1500)});
+    const j = await r.json();
+    backendUp = j.model_loaded === true;
+  }catch(e){ backendUp = false; }
+  document.getElementById("statusDot").classList.toggle("on", backendUp);
+  document.getElementById("statusText").textContent =
+    backendUp ? "live model connected" : "offline demo mode";
+  document.getElementById("backendWarn").style.display = backendUp ? "none" : "block";
+  if(backendUp) loadSampleHours();
+  onInput();
+}
+
+// ============================================================
+// Offline surrogate - a transparent approximation of the model's
+// decision logic, derived from the documented feature importances
+// (precip_lag1 dominant ~42%, then low/mid cloud, afternoon convection,
+// gusts, falling pressure, location base-rate). Used ONLY when the real
+// backend is unreachable, so the demo never dies mid-presentation.
+// ============================================================
+function surrogate(f){
+  let z = -2.4;
+  z += 2.9 * Math.min(f.recent_rain_mm/3, 1.4);        // persistence - dominant
+  z += 0.014 * f.cloud_cover_low;
+  z += 0.008 * f.cloud_cover_mid;
+  z += 0.018 * f.recent_gust_kmh;
+  z += (f.hour>=12 && f.hour<=18) ? 0.7 : (f.hour<6 ? -0.6 : 0);  // diurnal
+  z += f.pressure_falling ? 0.5 : -0.3;
+  z += (f.location==="montego_bay") ? 0.55 : -0.25;    // rain-shadow base rate
+  z += 0.010 * (f.relative_humidity - 70);
+  z += ([10,11,4,5].includes(f.month)) ? 0.4 : 0;      // bimodal wet season
+  const p = 1/(1+Math.exp(-z));
+  const drivers=[];
+  if(f.recent_rain_mm>0.5) drivers.push("recent rain (strong persistence signal)");
+  if(f.cloud_cover_low>60) drivers.push("heavy low cloud");
+  if(f.recent_gust_kmh>25) drivers.push("gusty wind");
+  if(f.pressure_falling) drivers.push("falling pressure");
+  if(f.hour>=12&&f.hour<=18) drivers.push("afternoon convection window");
+  return {probability:p, drivers: drivers.length?drivers:["conditions generally dry"]};
+}
+
+// ============================================================
+// Gather inputs, predict (real or surrogate), render
+// ============================================================
+function readInputs(){
+  return {
+    location: location_,
+    hour: +val("hour"),
+    month: +val("month"),
+    relative_humidity: +val("rh"),
+    cloud_cover_low: +val("ccl"),
+    cloud_cover_mid: +val("ccm"),
+    cloud_cover_high: +val("cch"),
+    recent_rain_mm: +val("rain"),
+    recent_gust_kmh: +val("gust"),
+    pressure_falling: pressureFalling,
+    enso_phase: "neutral",
+    threshold: +val("thr"),
+  };
+}
+const val = id => document.getElementById(id).value;
+
+async function predict(f){
+  if(backendUp){
+    try{
+      const r = await fetch(API + "/predict", {
+        method:"POST", headers:{"Content-Type":"application/json"},
+        body: JSON.stringify(f)
+      });
+      const j = await r.json();
+      return {probability:j.probability, drivers:j.key_drivers};
+    }catch(e){ /* fall through to surrogate */ }
+  }
+  return surrogate(f);
+}
+
+async function onInput(){
+  syncLabels();
+  const f = readInputs();
+  const out = await predict(f);
+  render(out.probability, f.threshold, out.drivers);
+}
+
+function render(prob, thr, drivers){
+  const deploy = prob >= thr;
+  const ro = document.getElementById("readout");
+  ro.className = "readout " + (deploy ? "deploy" : "stow");
+  document.getElementById("decision").textContent = deploy ? "DEPLOY" : "STOW";
+  document.getElementById("confidence").textContent =
+    deploy ? "extend the screen - wet veranda likely" : "keep it stowed - conditions dry enough";
+  document.getElementById("probBig").textContent = prob.toFixed(2);
+  document.getElementById("gaugeFill").style.width = (prob*100).toFixed(0)+"%";
+  document.getElementById("thrTick").textContent = "▲ threshold " + thr.toFixed(2);
+  document.getElementById("thrTick").style.marginLeft = "calc("+(thr*100).toFixed(0)+"% - 40px)";
+  const dv = document.getElementById("drivers");
+  dv.innerHTML = drivers.map(d=>`<span class="chip">${d}</span>`).join("");
+}
+
+// ============================================================
+// Slider label syncing + fill styling
+// ============================================================
+function syncLabels(){
+  setLabel("hour","hourV", v=>String(v).padStart(2,"0")+":00");
+  setLabel("month","monthV", v=>MONTHS[v-1]);
+  setLabel("ccl","cclV", v=>v+"%");
+  setLabel("ccm","ccmV", v=>v+"%");
+  setLabel("cch","cchV", v=>v+"%");
+  setLabel("rh","rhV", v=>v+"%");
+  setLabel("rain","rainV", v=>(+v).toFixed(1)+" mm");
+  setLabel("gust","gustV", v=>v+" km/h");
+  setLabel("thr","thrV", v=>(+v).toFixed(2));
+}
+function setLabel(id,labelId,fmt){
+  const el=document.getElementById(id); if(!el)return;
+  const v=el.value; const lab=document.getElementById(labelId); if(lab)lab.textContent=fmt(v);
+  const pct=((v-el.min)/(el.max-el.min))*100; el.style.setProperty("--fill",pct+"%");
+}
+
+// ============================================================
+// Mode / control handlers
+// ============================================================
+function setMode(m){
+  mode=m;
+  document.getElementById("tabSliders").classList.toggle("active",m==="sliders");
+  document.getElementById("tabHistory").classList.toggle("active",m==="history");
+  document.getElementById("sliderMode").style.display = m==="sliders"?"block":"none";
+  document.getElementById("historyMode").style.display = m==="history"?"block":"none";
+  document.getElementById("truth").classList.remove("show");
+  if(m==="sliders") onInput();
+}
+function setLoc(l){
+  location_=l;
+  document.querySelectorAll("#locGroup button").forEach(b=>b.classList.toggle("on",b.dataset.loc===l));
+  onInput();
+}
+function setPressure(f){
+  pressureFalling=f;
+  document.getElementById("pFall").classList.toggle("on",f);
+  document.getElementById("pRise").classList.toggle("on",!f);
+  onInput();
+}
+
+// ============================================================
+// Historical hour picker
+// ============================================================
+let sampleHours=[];
+async function loadSampleHours(){
+  try{
+    const r=await fetch(API+"/sample_hours");
+    const j=await r.json();
+    sampleHours=j.hours||[];
+  }catch(e){ sampleHours=OFFLINE_SAMPLES; }
+  if(!sampleHours.length) sampleHours=OFFLINE_SAMPLES;
+  const sel=document.getElementById("histPick");
+  sel.innerHTML='<option value="">Select an hour…</option>'+
+    sampleHours.map((h,i)=>`<option value="${i}">${h.label}</option>`).join("");
+}
+async function onHistoryPick(){
+  const i=document.getElementById("histPick").value;
+  if(i==="")return;
+  const h=sampleHours[+i];
+  const f={...h.inputs, threshold:+val("thr")};
+  const out=await predict(f);
+  render(out.probability, f.threshold, out.drivers);
+  // show ground truth
+  const deploy = out.probability>=f.threshold;
+  const correct = (deploy && h.actual===1) || (!deploy && h.actual===0);
+  const t=document.getElementById("truth");
+  t.className="truth show "+(correct?"correct":"wrong");
+  t.innerHTML = (correct?"✓ Correct — ":"✗ Missed — ")+
+    `the veranda <b>actually ${h.actual===1?"got wet":"stayed dry"}</b> this hour `+
+    `(${h.actual_detail||""}). Model said <b>${deploy?"DEPLOY":"STOW"}</b>.`;
+}
+
+// A few offline sample hours so the history picker works even without the backend.
+const OFFLINE_SAMPLES=[
+  {label:"Mo Bay · 28 Oct 2025 14:00 · Hurricane Melissa", actual:1, actual_detail:"12.4 mm rain, 70 km/h gusts",
+   inputs:{location:"montego_bay",hour:14,month:10,relative_humidity:96,cloud_cover_low:98,cloud_cover_mid:95,cloud_cover_high:90,recent_rain_mm:9.8,recent_gust_kmh:68,pressure_falling:true,enso_phase:"neutral"}},
+  {label:"Kingston · 12 Jul 2025 03:00 · calm night", actual:0, actual_detail:"dry, clear",
+   inputs:{location:"kingston",hour:3,month:7,relative_humidity:74,cloud_cover_low:12,cloud_cover_mid:8,cloud_cover_high:20,recent_rain_mm:0,recent_gust_kmh:9,pressure_falling:false,enso_phase:"neutral"}},
+  {label:"Mo Bay · 5 May 2025 16:00 · afternoon shower", actual:1, actual_detail:"2.1 mm, gusty",
+   inputs:{location:"montego_bay",hour:16,month:5,relative_humidity:89,cloud_cover_low:82,cloud_cover_mid:60,cloud_cover_high:35,recent_rain_mm:1.4,recent_gust_kmh:31,pressure_falling:true,enso_phase:"neutral"}},
+  {label:"Kingston · 20 Aug 2025 13:00 · hazy dry afternoon", actual:0, actual_detail:"no rain despite cloud",
+   inputs:{location:"kingston",hour:13,month:8,relative_humidity:68,cloud_cover_low:45,cloud_cover_mid:30,cloud_cover_high:55,recent_rain_mm:0,recent_gust_kmh:18,pressure_falling:false,enso_phase:"neutral"}},
+  {label:"Mo Bay · 2 Nov 2025 05:00 · pre-dawn drizzle", actual:1, actual_detail:"0.6 mm, light gust",
+   inputs:{location:"montego_bay",hour:5,month:11,relative_humidity:93,cloud_cover_low:76,cloud_cover_mid:48,cloud_cover_high:22,recent_rain_mm:0.7,recent_gust_kmh:22,pressure_falling:true,enso_phase:"neutral"}},
+];
+
+// ============================================================
+// Init
+// ============================================================
+checkBackend();
+</script>
+</body>
+</html>

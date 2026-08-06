@@ -1,0 +1,148 @@
+{
+  "hours": [
+    {
+      "label": "Kingston \u00b7 27 Sep 2025 05:00",
+      "actual": 1,
+      "actual_detail": "6.1 mm, gust 13 km/h",
+      "inputs": {
+        "location": "kingston",
+        "hour": 5,
+        "month": 9,
+        "relative_humidity": 97.0,
+        "cloud_cover_low": 62.0,
+        "cloud_cover_mid": 25.0,
+        "cloud_cover_high": 100.0,
+        "recent_rain_mm": 0.8,
+        "recent_gust_kmh": 11.2,
+        "pressure_falling": false,
+        "enso_phase": "neutral"
+      }
+    },
+    {
+      "label": "MoBay \u00b7 15 Oct 2025 13:00",
+      "actual": 1,
+      "actual_detail": "0.7 mm, gust 29 km/h",
+      "inputs": {
+        "location": "montego_bay",
+        "hour": 13,
+        "month": 10,
+        "relative_humidity": 73.0,
+        "cloud_cover_low": 14.0,
+        "cloud_cover_mid": 7.0,
+        "cloud_cover_high": 87.0,
+        "recent_rain_mm": 0.1,
+        "recent_gust_kmh": 27.4,
+        "pressure_falling": true,
+        "enso_phase": "la_nina"
+      }
+    },
+    {
+      "label": "Kingston \u00b7 14 Nov 2025 16:00",
+      "actual": 1,
+      "actual_detail": "0.4 mm, gust 21 km/h",
+      "inputs": {
+        "location": "kingston",
+        "hour": 16,
+        "month": 11,
+        "relative_humidity": 71.0,
+        "cloud_cover_low": 14.0,
+        "cloud_cover_mid": 36.0,
+        "cloud_cover_high": 15.0,
+        "recent_rain_mm": 0.1,
+        "recent_gust_kmh": 31.3,
+        "pressure_falling": true,
+        "enso_phase": "la_nina"
+      }
+    },
+    {
+      "label": "Kingston \u00b7 2 Dec 2025 11:00",
+      "actual": 0,
+      "actual_detail": "0.0 mm, gust 22 km/h",
+      "inputs": {
+        "location": "kingston",
+        "hour": 11,
+        "month": 12,
+        "relative_humidity": 56.0,
+        "cloud_cover_low": 4.0,
+        "cloud_cover_mid": 1.0,
+        "cloud_cover_high": 29.0,
+        "recent_rain_mm": 0.0,
+        "recent_gust_kmh": 16.2,
+        "pressure_falling": false,
+        "enso_phase": "la_nina"
+      }
+    },
+    {
+      "label": "MoBay \u00b7 11 Dec 2025 08:00",
+      "actual": 0,
+      "actual_detail": "0.0 mm, gust 11 km/h",
+      "inputs": {
+        "location": "montego_bay",
+        "hour": 8,
+        "month": 12,
+        "relative_humidity": 79.0,
+        "cloud_cover_low": 1.0,
+        "cloud_cover_mid": 0.0,
+        "cloud_cover_high": 10.0,
+        "recent_rain_mm": 0.0,
+        "recent_gust_kmh": 9.4,
+        "pressure_falling": false,
+        "enso_phase": "la_nina"
+      }
+    },
+    {
+      "label": "MoBay \u00b7 27 Jan 2026 05:00",
+      "actual": 1,
+      "actual_detail": "0.6 mm, gust 22 km/h",
+      "inputs": {
+        "location": "montego_bay",
+        "hour": 5,
+        "month": 1,
+        "relative_humidity": 94.0,
+        "cloud_cover_low": 53.0,
+        "cloud_cover_mid": 56.0,
+        "cloud_cover_high": 0.0,
+        "recent_rain_mm": 0.3,
+        "recent_gust_kmh": 25.6,
+        "pressure_falling": true,
+        "enso_phase": "neutral"
+      }
+    },
+    {
+      "label": "Kingston \u00b7 15 Apr 2026 19:00",
+      "actual": 0,
+      "actual_detail": "0.0 mm, gust 13 km/h",
+      "inputs": {
+        "location": "kingston",
+        "hour": 19,
+        "month": 4,
+        "relative_humidity": 64.0,
+        "cloud_cover_low": 2.0,
+        "cloud_cover_mid": 2.0,
+        "cloud_cover_high": 0.0,
+        "recent_rain_mm": 0.0,
+        "recent_gust_kmh": 11.5,
+        "pressure_falling": false,
+        "enso_phase": "neutral"
+      }
+    },
+    {
+      "label": "Kingston \u00b7 18 Apr 2026 23:00",
+      "actual": 0,
+      "actual_detail": "0.0 mm, gust 12 km/h",
+      "inputs": {
+        "location": "kingston",
+        "hour": 23,
+        "month": 4,
+        "relative_humidity": 91.0,
+        "cloud_cover_low": 24.0,
+        "cloud_cover_mid": 2.0,
+        "cloud_cover_high": 2.0,
+        "recent_rain_mm": 0.0,
+        "recent_gust_kmh": 11.5,
+        "pressure_falling": false,
+        "enso_phase": "neutral"
+      }
+    }
+  ]
+}

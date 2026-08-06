@@ -1,0 +1,160 @@
+{
+  "trained_at_utc": "2026-07-10T07:58:02.240540+00:00",
+  "training_data": {
+    "file": "patio_features.parquet",
+    "sha256": "713ccf811d8bcaa720d9c2d40e009b6fd36be75b75a2e11830068b1da0344dd4"
+  },
+  "split_boundaries": {
+    "train_end": "2024-10-30 20:54:00",
+    "val_end": "2025-07-31 21:57:00",
+    "data_start": "2021-05-01 00:00:00",
+    "data_end": "2026-05-01 23:00:00",
+    "train_rows": "61386",
+    "val_rows": "13154",
+    "test_rows": "13156"
+  },
+  "feature_columns": [
+    "temperature_2m",
+    "relative_humidity_2m",
+    "dew_point_2m",
+    "apparent_temperature",
+    "pressure_msl",
+    "surface_pressure",
+    "cloud_cover",
+    "cloud_cover_low",
+    "cloud_cover_mid",
+    "cloud_cover_high",
+    "wind_speed_10m",
+    "et0_fao_evapotranspiration",
+    "vapour_pressure_deficit",
+    "sunshine_duration",
+    "oni",
+    "hour",
+    "month",
+    "hour_sin",
+    "hour_cos",
+    "month_sin",
+    "month_cos",
+    "precip_lag1",
+    "precip_lag3",
+    "precip_sum_3h",
+    "gust_lag1",
+    "gust_max_3h",
+    "pressure_msl_trend_3h",
+    "pressure_msl_trend_6h",
+    "cloud_cover_low_lag1",
+    "humidity_lag1",
+    "humidity_lag3",
+    "location_kingston",
+    "location_montego_bay",
+    "enso_phase_el_nino",
+    "enso_phase_la_nina",
+    "enso_phase_neutral"
+  ],
+  "models": {
+    "logistic_regression": {
+      "type": "sklearn.LogisticRegression",
+      "model_file": "logistic_regression.joblib",
+      "scaler_file": "logistic_regression_scaler.joblib",
+      "hyperparameters": {
+        "class_weight": "balanced",
+        "max_iter": 1000,
+        "random_state": 42
+      },
+      "metrics_train": {
+        "name": "LR on TRAIN",
+        "n_samples": 61374,
+        "positive_rate": 0.09021735588359892,
+        "roc_auc": 0.9446563722629416,
+        "pr_auc": 0.6496919557660612,
+        "precision_wet": 0.40240487563828037,
+        "recall_wet": 0.8824273072060683,
+        "f1_wet": 0.5527461960518129,
+        "confusion_matrix": [
+          [
+            48581,
+            7256
+          ],
+          [
+            651,
+            4886
+          ]
+        ]
+      },
+      "metrics_val": {
+        "name": "LR on VAL",
+        "n_samples": 13154,
+        "positive_rate": 0.09099893568496274,
+        "roc_auc": 0.942483190776417,
+        "pr_auc": 0.6283922929362447,
+        "precision_wet": 0.4342681858019281,
+        "recall_wet": 0.8279030910609858,
+        "f1_wet": 0.5697039379131934,
+        "confusion_matrix": [
+          [
+            10666,
+            1291
+          ],
+          [
+            206,
+            991
+          ]
+        ]
+      }
+    },
+    "xgboost_baseline": {
+      "type": "xgboost.XGBClassifier",
+      "model_file": "xgboost_baseline.json",
+      "hyperparameters": {
+        "n_estimators": 500,
+        "max_depth": 6,
+        "learning_rate": 0.1,
+        "scale_pos_weight": 10.084341701282282,
+        "early_stopping_rounds": 30,
+        "eval_metric": "aucpr",
+        "random_state": 42
+      },
+      "best_iteration": 144,
+      "metrics_train": {
+        "name": "XGBoost on TRAIN",
+        "n_samples": 61374,
+        "positive_rate": 0.09021735588359892,
+        "roc_auc": 0.9881165659342643,
+        "pr_auc": 0.8870808227386087,
+        "precision_wet": 0.5553516819571865,
+        "recall_wet": 0.9839263138883872,
+        "f1_wet": 0.7099758910536261,
+        "confusion_matrix": [
+          [
+            51475,
+            4362
+          ],
+          [
+            89,
+            5448
+          ]
+        ]
+      },
+      "metrics_val": {
+        "name": "XGBoost on VAL",
+        "n_samples": 13154,
+        "positive_rate": 0.09099893568496274,
+        "roc_auc": 0.9586608348531556,
+        "pr_auc": 0.7225977223934461,
+        "precision_wet": 0.5317887931034483,
+        "recall_wet": 0.8245614035087719,
+        "f1_wet": 0.646577137242057,
+        "confusion_matrix": [
+          [
+            11088,
+            869
+          ],
+          [
+            210,
+            987
+          ]
+        ]
+      }
+    }
+  }
+}

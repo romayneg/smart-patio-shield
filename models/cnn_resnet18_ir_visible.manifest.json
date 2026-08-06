@@ -1,0 +1,64 @@
+{
+  "model_name": "cnn_resnet18_ir_visible",
+  "architecture": "resnet18 (ImageNet-pretrained, adapted)",
+  "in_channels": 3,
+  "channels": [
+    "C13",
+    "C09",
+    "C02"
+  ],
+  "trained_at_utc": "2026-07-10T07:17:30.406739+00:00",
+  "weights_file": "cnn_resnet18_ir_visible.pt",
+  "metrics": {
+    "val_pr_auc_best": 0.45016183792501346,
+    "best_epoch": 3
+  },
+  "training_history": [
+    {
+      "epoch": 0,
+      "train_loss": 0.8426823494771715,
+      "val_pr_auc": 0.4390509747328019
+    },
+    {
+      "epoch": 1,
+      "train_loss": 0.7243975148081209,
+      "val_pr_auc": 0.4271772562453795
+    },
+    {
+      "epoch": 2,
+      "train_loss": 0.6767447322720646,
+      "val_pr_auc": 0.4450547673978117
+    },
+    {
+      "epoch": 3,
+      "train_loss": 0.610269908432278,
+      "val_pr_auc": 0.45016183792501346
+    },
+    {
+      "epoch": 4,
+      "train_loss": 0.5270523143963113,
+      "val_pr_auc": 0.4273410413709939
+    },
+    {
+      "epoch": 5,
+      "train_loss": 0.4541556829290415,
+      "val_pr_auc": 0.3484248484933431
+    },
+    {
+      "epoch": 6,
+      "train_loss": 0.3840720194793923,
+      "val_pr_auc": 0.38878578636420674
+    },
+    {
+      "epoch": 7,
+      "train_loss": 0.32409516179064085,
+      "val_pr_auc": 0.38676380806163774
+    },
+    {
+      "epoch": 8,
+      "train_loss": 0.2696064494464539,
+      "val_pr_auc": 0.36314695084212795
+    }
+  ],
+  "best_epoch": 3
+}
