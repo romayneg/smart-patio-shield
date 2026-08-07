@@ -1,13 +1,11 @@
 """
-src/models/cnn_eval.py
-
 Evaluation, interpretability, and ablation for Model 2 (vision).
 
   - evaluate_full : PR-AUC + PR curve + confusion matrix.
   - run_ablation  : trains IR-only vs IR+visible under identical settings and
                     tabulates the PR-AUC difference (the vision analogue of the
                     persistence experiment).
-  - show_examples : highest/lowest-scored test patches (what the model is confident about).
+  - show_examples : most confidently-correct and confidently-wrong test patches.
   - saliency_map  : gradient-based highlight of which pixels drove a prediction.
 """
 
@@ -120,7 +118,7 @@ def show_examples(model, test_ds, device=None, n=4):
 def saliency_map(model, test_ds, idx, device=None):
     """Gradient-based saliency: which input pixels most affect the prediction.
 
-    Computes |d(logit)/d(input)| — bright pixels are those a small change in
+    Computes |d(logit)/d(input)|: bright pixels are those a small change in
     which would most change the model's output. The vision analogue of feature
     importance, but per-pixel and per-image.
     """

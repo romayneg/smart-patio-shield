@@ -1,6 +1,4 @@
 """
-src/models/goes_temporal.py
-
 Temporal variant of GoesPatchDataset: for each labelled hour T, stack the patch
 at T together with the previous (n_frames - 1) hourly patches at T-1, T-2, ...
 as additional channels, so a CNN can see how the cloud field MOVED into hour T.
@@ -77,7 +75,6 @@ class GoesTemporalDataset(Dataset):
         labels = labels[labels["split"] == split]
         self.label_of = dict(zip(labels["key"], labels["wet_veranda"]))
 
-        # NaN-guard the shared patch dict once (idempotent; matches base dataset).
         self._patches = patches
 
         # Keep keys whose full temporal stack (T, T-1, ..., T-(n-1)) is available

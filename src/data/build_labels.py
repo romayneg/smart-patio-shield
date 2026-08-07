@@ -1,6 +1,4 @@
 """
-src/data/build_labels.py
-
 Builds the label lookup table that bridges the tabular and image pipelines.
 
 For every (location, timestamp) in the processed feature set, records:
@@ -38,14 +36,14 @@ def build_label_table() -> pd.DataFrame:
     """Create the (key, location, time, wet_veranda, split) lookup table."""
     df = pd.read_parquet(PROCESSED_FILE)
 
-    # Apply the SAME split as the tabular models, then tag each row's split.
+    # Apply the SAME split as the tabular models.
     train, val, test, boundaries = time_based_split(df)
     split_of = {}
     for name, part in [("train", train), ("val", val), ("test", test)]:
         for idx in part.index:
             split_of[idx] = name
-    # time_based_split resets indices, so re-derive split membership by timestamp
-    # boundaries instead (robust and simple):
+    # time_based_split resets indices, so re-derive split membership by
+    # timestamp boundaries instead.
     train_end = boundaries["train_end"]
     val_end = boundaries["val_end"]
 

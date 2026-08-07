@@ -6,11 +6,11 @@ later, update SNAPSHOT_START and SNAPSHOT_END deliberately and re-fetch.
 
 Open-Meteo's Historical Weather API serves ECMWF ERA5 reanalysis data,
 a gridded global dataset combining historical observations with a
-physical atmospheric model. Divides the planet into a 31-kilometer grid.
-Resolution is roughly 9km. For Jamaica, the nearest grid cell is
-interpolated to our requested latitude/longitude.
+physical atmospheric model. It divides the planet into a 31-kilometer grid.
+For Jamaica, the nearest grid cell is interpolated to our requested
+latitude/longitude.
 
-API docs: https://open-meteo.com/en/docs/historical-weather-apix
+API docs: https://open-meteo.com/en/docs/historical-weather-api
 """
 
 import hashlib
@@ -23,7 +23,6 @@ import pandas as pd
 import requests
 from tqdm import tqdm
 
-# Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 
@@ -37,8 +36,7 @@ LOCATIONS = {
     "montego_bay": {"lat": 18.47298, "lon": -77.92134}
 }
 
-# The variables wanted from Open-Meteo. Each one a feature in the model.
-# Comments explain why each matters for rain prediction.
+# The variables wanted from Open-Meteo.
 # Note: in the Historical Archive API, 'rain' already includes convective
 # showers (unlike the Forecast API where rain and showers are separate).
 # Tropical precipitation is overwhelmingly convective; this is fine for
@@ -52,7 +50,7 @@ HOURLY_VARS = [
     "apparent_temperature",         # "feels-like" temp
     "precipitation",                # our target variable (mm in the hour) / total: rain + snow (no snow in Jamaica)
     "rain",                         # liquid rain only (includes showers in archive API)
-    "pressure_msl",                 # mean sea-level pressure; drops precedes storms
+    "pressure_msl",                 # mean sea-level pressure; drops precede storms
     "surface_pressure",             # local pressure
     "cloud_cover",                  # total cloud cover %
     "cloud_cover_low",              # low clouds matter more for rain than high cirrus
@@ -79,8 +77,8 @@ def fetch_location(name:str, lat: float, lon: float, start_date: str, end_date: 
     """
     Fetch hourly weather data for one location and date range.
 
-    Open-Meteo acceptes date ranges in YYYY-MM-DD format and returns JSON with parallel arrays:
-    one timestamp array and one array per requested variable. We reshape that into a Dataframe.
+    Open-Meteo accepts date ranges in YYYY-MM-DD format and returns JSON with parallel arrays:
+    one timestamp array and one array per requested variable. We reshape that into a DataFrame.
     """
 
     params = {
@@ -101,7 +99,6 @@ def fetch_location(name:str, lat: float, lon: float, start_date: str, end_date: 
     # The 'hourly' key contains a dict where each variable is a list parallel to the 'time' list
     df = pd.DataFrame(data['hourly'])
 
-    # Convert time strings to datetime objects
     df['time'] = pd.to_datetime(df['time'])
 
     # Add location column so we can stack data from multiple locations
@@ -160,7 +157,7 @@ if __name__ == "__main__":
 
     df = fetch_all_locations(str(SNAPSHOT_START), str(SNAPSHOT_END))
 
-    # Filename encodes the snapshot unambiguous identification
+    # Filename encodes the snapshot for unambiguous identification
     output_name = f"weather_jamaica_{SNAPSHOT_START}_to_{SNAPSHOT_END}.parquet"
     output_path = RAW_DATA_DIR / output_name
     df.to_parquet(output_path, index = False)

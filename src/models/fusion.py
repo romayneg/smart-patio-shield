@@ -1,6 +1,4 @@
 """
-src/models/fusion.py
-
 Model 3 - multimodal fusion of the tabular (Model 1) and vision (Model 2) branches.
 
 Two designs, evaluated under one protocol:

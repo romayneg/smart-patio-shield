@@ -7,7 +7,6 @@ import json
 from pathlib import Path
 import pandas as pd
 
-# File path
 PROCESSED = Path("patio_features.parquet")
 OUT = Path("sample_hours.json")
 
@@ -15,11 +14,11 @@ MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec
 
 def main():
     df = pd.read_parquet(PROCESSED)
-    # test period only (most recent 15%) — same chronological split as the models
+    # test period only (most recent 15%), same chronological split as the models
     df = df.sort_values("time")
     test = df.iloc[int(len(df)*0.85):].copy()
 
-    # pick a spread: some wet, some dry, some borderline, plus Melissa week
+    # pick a spread: some wet, some dry
     picks = []
     wet = test[test.wet_veranda == 1].sample(min(4, (test.wet_veranda==1).sum()), random_state=1)
     dry = test[test.wet_veranda == 0].sample(4, random_state=2)

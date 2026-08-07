@@ -1,5 +1,5 @@
 """
-Smart Patio Shield — Inference Service
+Smart Patio Shield: Inference Service
 ============================================================
 
 A minimal FastAPI service that loads the trained XGBoost model (Model 1) and
@@ -197,7 +197,6 @@ def predict(w: WeatherInput):
     prob = float(_model.predict_proba(X)[:, 1][0])
     thr = float(w.threshold)
     decision = "DEPLOY" if prob >= thr else "STOW"
-    # human-readable driver
     drivers = []
     if w.recent_rain_mm > 0.5:
         drivers.append("recent rain (strong persistence signal)")

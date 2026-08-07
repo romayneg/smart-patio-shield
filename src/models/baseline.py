@@ -1,9 +1,7 @@
 """
-src/models/baseline.py
-
 Trains the tabular baseline models for Smart Patio Shield:
-  - Logistic regression (with feature scaling) — the linear reference.
-  - XGBoost with early stopping — the strong baseline.
+  - Logistic regression (with feature scaling): the linear reference.
+  - XGBoost with early stopping: the strong baseline.
 
 Loads processed features, applies the time-based train/val/test split,
 trains both models on identical data (NaN rows dropped for clean comparison),
@@ -33,7 +31,6 @@ from sklearn.metrics import (
 )
 from sklearn.preprocessing import StandardScaler
 
-# Project paths
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 if str(PROJECT_ROOT) not in sys.path:
     sys.path.insert(0, str(PROJECT_ROOT))

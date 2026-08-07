@@ -52,7 +52,7 @@ GOES19_CUTOVER = pd.Timestamp("2025-04-07", tz="UTC")  # GOES-East handover
 
 fs = s3fs.S3FileSystem(anon=True, default_block_size=1024 * 1024)
 
-# Crop indices are constant per (bucket, band) — cache after first computation
+# Crop indices are constant per (bucket, band): cache after first computation
 _index_cache: dict = {}
 
 

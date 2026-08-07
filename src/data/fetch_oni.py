@@ -1,13 +1,11 @@
 """
-Fetches the NOAA Oceanic Niño Index (ONI) — 3-month running mean of
+Fetches the NOAA Oceanic Niño Index (ONI): 3-month running mean of
 sea surface temperature anomalies in the Niño 3.4 region.
 
 The ONI is the standard measure of El Niño-Southern Oscillation (ENSO) state.
-It is a naturally occurring, repeating climate cycle centered in the tropical
-Pacific Ocean that changes weather and temperature patterns all around the world.
 
 Negative values = La Niña (cool Pacific, generally wetter Caribbean),
-Positive = El Niño (warm  Pacific, generally drier Caribbean).
+Positive = El Niño (warm Pacific, generally drier Caribbean).
 
 The +/- 0.5°C threshold is the conventional boundary for declaring an El Niño or La Niña event.
 
@@ -33,8 +31,8 @@ ONI_URL = "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/
 
 SEASONS = ["DJF", "JFM", "FMA", "MAM", "AMJ", "MJJ", "JJA", "JAS", "ASO", "SON", "OND", "NDJ"]
 
-# Mapping from calendar month to the season that's center on it.
-# E.g. January is the middle of the Dec-Jan-Feb, so we map 1 -> DJF.
+# Mapping from calendar month to the season that's centered on it.
+# E.g. January is the middle of Dec-Jan-Feb, so we map 1 -> DJF.
 # This is the conventional way to assign a single ONI value to a month.
 MONTH_TO_SEASON = {
     1: "DJF", 2: "JFM", 3: "FMA", 4: "MAM", 5: "AMJ", 6: "MJJ",
@@ -46,8 +44,8 @@ def fetch_oni_table() -> pd.DataFrame:
     """
     Scrape the ONI table from NOAA's CPC page.
 
-    The table contains one large HTML table with year rows and 12 seasonal columns.
-    pandas.read_html parses it directly, but we get repeated header rows every 10 years, so we filter those out
+    The page contains one large HTML table with year rows and 12 seasonal columns.
+    pandas.read_html parses it directly, but we get repeated header rows every 10 years, so we filter those out.
     """
 
     print(f"Fetching ONI table from {ONI_URL}")
@@ -70,7 +68,6 @@ def fetch_oni_table() -> pd.DataFrame:
     # Remove repeated header rows (every 10 years the header is repeated)
     df = df[df['year'] != "Year"]
 
-    # Convert types
     df['year'] = pd.to_numeric(df['year'], errors="coerce")
     for season in SEASONS:
         df[season] = pd.to_numeric(df[season], errors="coerce")
@@ -102,7 +99,6 @@ def reshape_to_monthly(wide_df: pd.DataFrame) -> pd.DataFrame:
                 })
 
     df = pd.DataFrame(rows)
-    # Construct a proper period index for the month
     df['year_month'] = pd.to_datetime(
         df['year'].astype(str) + "-" + df['month'].astype(str).str.zfill(2)
     )

@@ -1,6 +1,4 @@
 """
-src/models/cnn.py
-
 CNN for Model 2 (vision) of Smart Patio Shield: predicts wet_veranda from a
 stacked GOES satellite patch (IR-only 2-channel, or IR+visible 3-channel).
 
@@ -36,7 +34,7 @@ def build_model(in_channels: int) -> nn.Module:
 
     # Replace first conv to accept the channel count. Initialize the new conv by
     # averaging the pretrained RGB filters across the colour dimension and
-    # repeating — preserves useful low-level edge/texture filters rather than
+    # repeating: preserves useful low-level edge/texture filters rather than
     # starting random.
     old = net.conv1
     new = nn.Conv2d(in_channels, 64, kernel_size=7, stride=2, padding=3, bias=False)
@@ -131,7 +129,7 @@ def save_model(model, history, in_channels, channels, metrics, out_dir):
     """
     Persist a trained CNN + a reproducibility manifest.
 
-    out_dir should be a Drive path on Colab
+    out_dir should be a Drive path on Colab.
     Saves:
       - <name>.pt              : model weights (state_dict)
       - <name>.manifest.json   : architecture, channels, metrics, training history

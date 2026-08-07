@@ -23,7 +23,7 @@ WEATHER_FILE = "weather_jamaica_2021-05-01_to_2026-05-01.parquet"
 ONI_FILE = "noaa_oni_monthly.parquet"
 OUTPUT_FILE = "patio_features.parquet"
 
-# Wet-veranda target thresholds — provisional, see 01_weather_eda.ipynb Section 12.
+# Wet-veranda target thresholds: provisional, see 01_weather_eda.ipynb Section 12.
 # Rule: light rain combined with gusty wind blows rain sideways through the grille;
 # heavier rain reaches the patio regardless of wind. The thresholds were physically
 # reasoned but are not yet empirically calibrated. EDA threshold-sensitivity analysis
@@ -38,9 +38,9 @@ WET_VERANDA_HEAVY_PRECIP_MM = 1.0
 
 def load_raw_data():
     """
-    Load raw weather and ONI datasets; applying EDA cleaning decisions.
+    Load raw weather and ONI datasets, applying EDA cleaning decisions.
 
-    EDA decisions (see 01_weather_eda.ipynb, sections 4 and 6:
+    EDA decisions (see 01_weather_eda.ipynb, sections 4 and 6):
     - boundary_layer_height: 6-month coverage gap (Dec 2023 - Jun 2024), cannot be reliably imputed.
     - rain: a literal duplicate of precipitation (Jamaica has no snow, and the archive API folds shower
       into both). Correlation 1.0, zero diff.
@@ -79,8 +79,8 @@ def add_temporal_features(df: pd.DataFrame) -> pd.DataFrame:
     Includes both raw integer encodings (which tree models handle natively
     and which keep feature-importance interpretable) and cyclical sin/cos
     encodings (which preserve wraparound adjacency: hour 23 sits next to
-    hour 0, December next to January. Day-of-week is deliberately omitted:
-    the EDA confirms rain rate is flat across weekdays, as it must be - the 
+    hour 0, December next to January). Day-of-week is deliberately omitted:
+    the EDA confirms rain rate is flat across weekdays, as it must be - the
     atmosphere has no concept of the work week.
     """
 
@@ -98,7 +98,6 @@ def add_temporal_features(df: pd.DataFrame) -> pd.DataFrame:
     return df
 
 
-# def add_lag_features(df): ...
 def add_lag_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Add lag and trend features that capture recent atmosphere state.
@@ -113,7 +112,7 @@ def add_lag_features(df: pd.DataFrame) -> pd.DataFrame:
     We leave these as NaN rather than fill - XGBoost handles missing values
     natively, and downstream code can choose a fill strategy if needed.
 
-    Leakage note: 'precipitation' and 'wind_gust_10m' are components of the
+    Leakage note: 'precipitation' and 'wind_gusts_10m' are components of the
     'wet_veranda' target. Their rolling features are computed on *shifted*
     values so the current hour is excluded - otherwise we'd be using the
     target's own ingredients as features. Non-targeted component variables

@@ -1,15 +1,13 @@
 """
-src/data/audit_goes.py
-
 Audits the downloaded GOES patch archive for completeness and integrity, and
 optionally deletes incomplete day-files so they are re-fetched on the next
 `python -m src.data.fetch_goes` run.
 
 Two problems are detected:
-  Missing days  — a day in the snapshot window with no .npz at all. (While the
+  Missing days  : a day in the snapshot window with no .npz at all. (While the
                   main download is still running, "missing" just means "not yet
                   fetched"; this figure is only meaningful once it completes.)
-  Partial days  — a .npz that exists but has blank (all-NaN) channels from scans
+  Partial days  : a .npz that exists but has blank (all-NaN) channels from scans
                   that failed to download, or fewer patches than expected (a
                   truncated write), or that won't open at all (corrupt).
 
@@ -22,13 +20,13 @@ archive truly lacks that band-hour) and re-fetching returns blank again; others
 are transient (a dropped connection) and re-fetching recovers them. You cannot
 tell which without trying.
 
-Workflow: audit -> clean -> re-run fetcher ONCE ->audit again.
+Workflow: audit -> clean -> re-run fetcher ONCE -> audit again.
 Whatever is still blank after one clean re-fetch is a genuine gap.
 
 Usage (from project root, ideally AFTER the main download finishes):
   python -m src.data.audit_goes                      # report only
   python -m src.data.audit_goes --report audit.json  # + save full report
-  python -m src.data.audit_goes --clean              # delete partials >= 10% affected, then re-fetch
+  python -m src.data.audit_goes --clean              # delete partials >= 10% affected
   python -m src.data.audit_goes --clean --min-blank-frac 0.0   # re-fetch EVERY partial once
 """
 

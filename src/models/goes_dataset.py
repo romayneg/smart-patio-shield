@@ -1,6 +1,4 @@
 """
-src/models/goes_dataset.py
-
 PyTorch Dataset that serves GOES patches paired with wet_veranda labels.
 
 Joins two sources by the "location|ISO-timestamp" key:
