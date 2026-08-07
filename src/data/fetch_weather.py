@@ -4,11 +4,12 @@ Fetches historical hourly weather data for Jamaican locations from Open-Meteo.
 For project reproducibility, the date range is fixed in code. To extend the window
 later, update SNAPSHOT_START and SNAPSHOT_END deliberately and re-fetch.
 
-Open-Meteo's Historical Weather API serves ECMWF ERA5 reanalysis data,
-a gridded global dataset combining historical observations with a
-physical atmospheric model. It divides the planet into a 31-kilometer grid.
-For Jamaica, the nearest grid cell is interpolated to our requested
-latitude/longitude.
+Open-Meteo's Historical Weather API serves ECMWF reanalysis data, a gridded
+global dataset combining historical observations with a physical atmospheric
+model. Dates from 2017 onward are served by ECMWF IFS at 9 km resolution, with
+ERA5 (25 km) as fallback for earlier dates, so the 2021-2026 snapshot window is
+almost entirely IFS. For Jamaica, the nearest grid cell is interpolated to our
+requested latitude/longitude.
 
 API docs: https://open-meteo.com/en/docs/historical-weather-api
 """
