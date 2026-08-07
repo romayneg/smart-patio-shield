@@ -60,7 +60,7 @@ NUMERIC_FEATURES = [
 ]
 CATEGORICAL_FEATURES = ["location", "enso_phase"]
 LOCATIONS = ["kingston", "montego_bay"]
-ENSO_PHASES = ["nina", "neutral", "nino"]
+ENSO_PHASES = ["el_nino", "la_nina", "neutral"]
 
 # Decision threshold - the operating point for deploy/stow.
 # 0.5 is the default; a real deployment would tune this to the cost of a
@@ -116,7 +116,7 @@ class WeatherInput(BaseModel):
     recent_rain_mm: float = 0.5             # mm in the previous hour (precip_lag1)
     recent_gust_kmh: float = 25.0           # max gust previous hour (gust_lag1)
     pressure_falling: bool = True           # is pressure trending down (storm sign)?
-    enso_phase: str = "neutral"             # nina | neutral | nino
+    enso_phase: str = "neutral"             # el_nino | la_nina | neutral
     threshold: float = DECISION_THRESHOLD   # allow the demo to move the operating point
 
 
@@ -154,7 +154,7 @@ def _derive_features(w: WeatherInput) -> pd.DataFrame:
         "et0_fao_evapotranspiration": max(0.0, 0.15 * (1 - cloud_all / 100)),
         "vapour_pressure_deficit": max(0.0, vpd),
         "sunshine_duration": max(0.0, 3600 * (1 - cloud_all / 100) * (1 if 6 <= w.hour <= 18 else 0)),
-        "oni": {"nina": -1.0, "neutral": 0.0, "nino": 1.0}[w.enso_phase],
+        "oni": {"la_nina": -1.0, "neutral": 0.0, "el_nino": 1.0}[w.enso_phase],
         "hour": w.hour,
         "month": w.month,
         "hour_sin": math.sin(2 * math.pi * w.hour / 24),
