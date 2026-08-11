@@ -27,7 +27,7 @@ EXTERNAL_DATA_DIR = PROJECT_ROOT / "data" / "external"
 ONI_URL = "https://www.cpc.ncep.noaa.gov/products/analysis_monitoring/ensostuff/ONI_v5.php"
 
 # The 12 overlapping 3-month seasons used by NOAA. Each season is named by its three constituent months.
-# The "center month" of each season is what we'll use to align with our weather data's monthly index.
+# The "center month" of each season is what I'll use to align with the weather data's monthly index.
 
 SEASONS = ["DJF", "JFM", "FMA", "MAM", "AMJ", "MJJ", "JJA", "JAS", "ASO", "SON", "OND", "NDJ"]
 
@@ -82,7 +82,7 @@ def reshape_to_monthly(wide_df: pd.DataFrame) -> pd.DataFrame:
     """
     Convert the year x season wide format into a tidy monthly DataFrame with columns: year, month, season, oni
 
-    This is the form we'll merge into our hourly weather data.
+    This is the form I'll merge into our hourly weather data.
     """
 
     rows = []

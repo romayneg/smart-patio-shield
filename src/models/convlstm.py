@@ -7,13 +7,11 @@ convolution over stacked channels has no notion that frame t-1 precedes frame t.
 A ConvLSTM keeps the spatial map and carries a recurrent hidden state across
 frames, so cloud growth and displacement can in principle be represented.
 
-Two things to be honest about when reporting results from this module:
+Two things to note from the reported results from this module:
   1. The network is trained from scratch. The ResNet-18 baseline is fine-tuned
      from ImageNet weights, so this comparison is not architecture-for-
      architecture equal; ConvLSTM starts at a disadvantage on limited data.
-  2. Frame spacing is still hourly. If the earlier negative was caused by the
-     sampling interval rather than by the architecture, ConvLSTM will not rescue
-     it, and that outcome is itself informative.
+  2. Frame spacing is still hourly.
 
 Input convention: the temporal dataset yields (C * T, H, W) with frames in
 contiguous blocks, oldest first. The classifier reshapes to (T, C, H, W)
@@ -103,8 +101,8 @@ def evaluate(model, loader, device) -> dict:
 def train_convlstm(train_ds, val_ds, channels_per_frame, n_frames,
                    hidden=64, epochs=25, batch_size=64, lr=1e-3,
                    patience=4, device=None):
-    """Same recipe as cnn.train_model: class-weighted BCE, Adam, PR-AUC early
-    stopping. Learning rate defaults higher than the ResNet's 1e-4 because this
+    """Same procedure as cnn.train_model: class-weighted BCE, Adam, PR-AUC early
+    stopping. Learning rate is higher than the ResNet's 1e-4 because this
     network is trained from scratch rather than fine-tuned."""
     device = device or ("cuda" if torch.cuda.is_available() else "cpu")
     train_loader = DataLoader(train_ds, batch_size=batch_size, shuffle=True, num_workers=2)

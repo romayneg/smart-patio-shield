@@ -8,8 +8,6 @@ trains both models on identical data (NaN rows dropped for clean comparison),
 evaluates on train and val, and saves model artifacts + a training manifest.
 
 The test set is not touched here. It is held out for final evaluation only.
-
-Run: python -m src.models.baseline    (from project root)
 """
 
 import hashlib
@@ -41,9 +39,9 @@ PROCESSED_FILE = PROJECT_ROOT / "data" / "processed" / "patio_features.parquet"
 MODELS_DIR = PROJECT_ROOT / "models"
 
 
-# ----- Feature schema (single source of truth) -----
+# ----- Feature schema -----
 NUMERIC_FEATURES = [
-    # Current-hour atmospheric state (target components excluded)
+    # Current-hour atmospheric state
     "temperature_2m", "relative_humidity_2m", "dew_point_2m", "apparent_temperature",
     "pressure_msl", "surface_pressure",
     "cloud_cover", "cloud_cover_low", "cloud_cover_mid", "cloud_cover_high",

@@ -7,10 +7,8 @@ Two designs, evaluated under one protocol:
   feature-level fusion : concatenate the CNN's 512-d embedding with the tabular
                          feature vector and train a joint head.
 
-Leakage discipline: both combining stages are fitted on the base models'
-validation predictions - never their training predictions, which are
-unrealistically strong because the base models have already seen that data,
-and the full stack is evaluated exactly once on the held-out test set.
+Both combining stages are fitted on the base models' validation predictions and
+the full stack is evaluated exactly once on the held-out test set.
 
 Comparability: fusion can only score hours that have both a tabular row and a
 satellite patch. All three models are therefore additionally reported on that
@@ -160,8 +158,7 @@ def oof_tabular_predictions(model_path, manifest_path, n_splits=5):
     from base models that had themselves been early-stopped on that validation
     set. Those probabilities are optimistically biased, and there were only
     ~13k of them. Out-of-fold predictions are unbiased (each row is predicted by
-    a model that never saw it) and there are ~5x more, which is the standard
-    protocol for stacking.
+    a model that never saw it) and there are ~5x more.
     """
     import json
     import numpy as np

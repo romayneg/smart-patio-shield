@@ -2,24 +2,22 @@
 Fetches GOES-East satellite imagery patches for the Smart Patio Shield project.
 
 For each hour in the snapshot window, downloads three ABI bands (C13 clean IR,
-C09 mid-level water vapor, C02 red visible) from the public NOAA archive on AWS,
+C09 mid-level water vapour, C02 red visible) from the public NOAA archive on AWS,
 crops a 64x64-pixel (~128x128 km) patch around each city, and saves stacked
 patches to per-day .npz files.
 
 Design notes:
-  - LAZY READS: files are opened over S3 without downloading fully; only the
+  - Files are opened over S3 without downloading fully; only the
     HDF5 chunks covering the crop window are transferred (a few MB instead of
     25-200 MB per file).
-  - RESUMABLE: a day whose output file already exists is skipped, so the script
+  - A day whose output file already exists is skipped, so the script
     can be stopped and restarted freely.
-  - REVERSE CHRONOLOGICAL: fetches newest days first, so the val/test periods
+  - Fetches newest days first, so the val/test periods
     (most recent) are covered even if the run is cut short.
   - Band 02 (0.5 km native) is mean-downsampled to the 2 km IR grid so all
     channels align at 64x64.
   - Missing/corrupt satellite files are logged and stored as NaN channels
     rather than crashing the run.
-
-Run: python -m src.data.fetch_goes   (from project root; safe to re-run)
 """
 
 import json

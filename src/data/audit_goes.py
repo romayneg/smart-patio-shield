@@ -1,17 +1,17 @@
 """
 Audits the downloaded GOES patch archive for completeness and integrity, and
 optionally deletes incomplete day-files so they are re-fetched on the next
-`python -m src.data.fetch_goes` run.
+src.data.fetch_goes run.
 
 Two problems are detected:
-  Missing days  : a day in the snapshot window with no .npz at all. (While the
+  Missing days  : a day in the snapshot window with no .npz at all. While the
                   main download is still running, "missing" just means "not yet
-                  fetched"; this figure is only meaningful once it completes.)
+                  fetched"
   Partial days  : a .npz that exists but has blank (all-NaN) channels from scans
-                  that failed to download, or fewer patches than expected (a
-                  truncated write), or that won't open at all (corrupt).
+                  that failed to download, or fewer patches than expected , or
+                  that won't open at all.
 
-Why a separate tool: fetch_goes skips any day whose file already exists, so it
+Why a separate tool? fetch_goes skips any day whose file already exists, so it
 will not re-fetch a partial day on its own. This script deletes partial days so
 that the fetcher's normal resume logic re-downloads them.
 
@@ -23,11 +23,11 @@ tell which without trying.
 Workflow: audit -> clean -> re-run fetcher ONCE -> audit again.
 Whatever is still blank after one clean re-fetch is a genuine gap.
 
-Usage (from project root, ideally AFTER the main download finishes):
+Usage (ideally after the main download finishes):
   python -m src.data.audit_goes                      # report only
   python -m src.data.audit_goes --report audit.json  # + save full report
   python -m src.data.audit_goes --clean              # delete partials >= 10% affected
-  python -m src.data.audit_goes --clean --min-blank-frac 0.0   # re-fetch EVERY partial once
+  python -m src.data.audit_goes --clean --min-blank-frac 0.0   # re-fetch every partial once
 """
 
 import argparse

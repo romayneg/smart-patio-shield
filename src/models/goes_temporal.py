@@ -1,10 +1,10 @@
 """
 Temporal variant of GoesPatchDataset: for each labelled hour T, stack the patch
 at T together with the previous (n_frames - 1) hourly patches at T-1, T-2, ...
-as additional channels, so a CNN can see how the cloud field MOVED into hour T.
+as additional channels, so a CNN can see how the cloud field moved into hour T.
 
-This is a leakage-safe test of whether temporal context (motion) improves Model 2,
-using ONLY patches already on disk (no new download). Frames are hourly, which is
+This is a leakage-safe test of whether temporal context improves Model 2,
+using only patches already on disk (no new download). Frames are hourly, which is
 coarse for storm motion; if even hourly stacking helps, finer sub-hourly stacking
 would likely help more (future work). If it does not help, single-frame is near
 the ceiling for this data.
@@ -16,13 +16,12 @@ Total channels = len(channels) * n_frames.
 
 Design notes:
   - Composes the same preloaded patch dict as GoesPatchDataset; no changes to the
-    existing dataset/cnn modules, so nothing already working is disturbed.
-  - A sample is INCLUDED only if all n_frames patches exist for that location
+    existing dataset/cnn modules.
+  - A sample is included only if all n_frames patches exist for that location
     (so early-hour samples with no history are dropped). This shrinks the set
     slightly and equally across configs, keeping comparisons fair.
   - Normalization is per-(band) computed on TRAIN only and reused; the same band
-    stat is applied to that band in every frame (a band's physics doesn't change
-    with which timestep it sits in).
+    stat is applied to that band in every frame.
 """
 
 from datetime import datetime, timedelta
@@ -60,10 +59,9 @@ class GoesTemporalDataset(Dataset):
         split      : 'train' | 'val' | 'test'
         channels   : bands to stack per frame, e.g. IR_ONLY or ALL_BANDS
         n_frames   : number of consecutive hourly frames (>=1). n_frames=1 is
-                     equivalent to the original single-frame dataset (useful as a
-                     controlled baseline in the same code path).
+                     equivalent to the original single-frame dataset .
         norm_stats : {band: (mean, std)} from TRAIN; computed here if None.
-        patches    : preloaded {key: (3,64,64)} dict (required in practice).
+        patches    : preloaded {key: (3,64,64)} dict.
         """
         assert n_frames >= 1
         assert patches is not None, "pass the preloaded patches dict"

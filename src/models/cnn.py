@@ -33,9 +33,7 @@ def build_model(in_channels: int) -> nn.Module:
     net = models.resnet18(weights=models.ResNet18_Weights.IMAGENET1K_V1)
 
     # Replace first conv to accept the channel count. Initialize the new conv by
-    # averaging the pretrained RGB filters across the colour dimension and
-    # repeating: preserves useful low-level edge/texture filters rather than
-    # starting random.
+    # averaging the pretrained RGB filters across the colour dimension and repeating.
     old = net.conv1
     new = nn.Conv2d(in_channels, 64, kernel_size=7, stride=2, padding=3, bias=False)
     with torch.no_grad():

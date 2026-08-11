@@ -34,8 +34,7 @@ ALL_BANDS = ["C13", "C09", "C02"]
 def _load_all_patches() -> dict:
     """
     Load every patch from every day-file into one {key: (3,64,64)} dict.
-    8k-60k small patches fit comfortably in RAM; simpler and faster than
-    re-opening files per access.
+    8k-60k small patches fit comfortably in RAM.
     """
     patches = {}
     for f in sorted(GOES_DIR.glob("goes_*.npz")):

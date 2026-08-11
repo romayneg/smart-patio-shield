@@ -1,14 +1,13 @@
 """
 Fetches historical hourly weather data for Jamaican locations from Open-Meteo.
 
-For project reproducibility, the date range is fixed in code. To extend the window
-later, update SNAPSHOT_START and SNAPSHOT_END deliberately and re-fetch.
+For project reproducibility, the date range is fixed in code.
 
 Open-Meteo's Historical Weather API serves ECMWF reanalysis data, a gridded
 global dataset combining historical observations with a physical atmospheric
 model. Dates from 2017 onward are served by ECMWF IFS at 9 km resolution, with
 ERA5 (25 km) as fallback for earlier dates, so the 2021-2026 snapshot window is
-almost entirely IFS. For Jamaica, the nearest grid cell is interpolated to our
+almost entirely IFS. For Jamaica, the nearest grid cell is interpolated to the
 requested latitude/longitude.
 
 API docs: https://open-meteo.com/en/docs/historical-weather-api
@@ -31,7 +30,7 @@ RAW_DATA_DIR = PROJECT_ROOT / "data" / "raw"
 SNAPSHOT_END = date(2026, 5, 1)
 SNAPSHOT_START = date(2021, 5, 1)  # 5 years prior
 
-# Our two target locations. Coordinates from Google Maps
+# The two target locations. Coordinates from Google Maps
 LOCATIONS = {
     "kingston": {"lat": 17.9714, "lon": -76.7945},
     "montego_bay": {"lat": 18.47298, "lon": -77.92134}
@@ -49,7 +48,7 @@ HOURLY_VARS = [
     "relative_humidity_2m",         # humidity is a strong rain predictor
     "dew_point_2m",                 # related to humidity; closer to temp = closer to saturation
     "apparent_temperature",         # "feels-like" temp
-    "precipitation",                # our target variable (mm in the hour) / total: rain + snow (no snow in Jamaica)
+    "precipitation",                # the target variable (mm in the hour) / total: rain + snow (no snow in Jamaica)
     "rain",                         # liquid rain only (includes showers in archive API)
     "pressure_msl",                 # mean sea-level pressure; drops precede storms
     "surface_pressure",             # local pressure
@@ -79,7 +78,7 @@ def fetch_location(name:str, lat: float, lon: float, start_date: str, end_date: 
     Fetch hourly weather data for one location and date range.
 
     Open-Meteo accepts date ranges in YYYY-MM-DD format and returns JSON with parallel arrays:
-    one timestamp array and one array per requested variable. We reshape that into a DataFrame.
+    one timestamp array and one array per requested variable. Reshaped into a DataFrame.
     """
 
     params = {

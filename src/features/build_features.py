@@ -29,7 +29,7 @@ OUTPUT_FILE = "patio_features.parquet"
 # reasoned but are not yet empirically calibrated. EDA threshold-sensitivity analysis
 # identified the light-rain precip threshold as the dominant lever, and the gust
 # threshold (currently low relative to typical rainy-hour gusts) as the priority for
-# recalibration via a personal observation log.
+# recalibration.
 
 WET_VERANDA_LIGHT_PRECIP_MM = 0.1
 WET_VERANDA_GUST_KMH = 15
@@ -76,8 +76,7 @@ def add_temporal_features(df: pd.DataFrame) -> pd.DataFrame:
     """
     Add time-based features derived from the timestamp.
 
-    Includes both raw integer encodings (which tree models handle natively
-    and which keep feature-importance interpretable) and cyclical sin/cos
+    Includes both raw integer encodings and cyclical sin/cos
     encodings (which preserve wraparound adjacency: hour 23 sits next to
     hour 0, December next to January). Day-of-week is deliberately omitted:
     the EDA confirms rain rate is flat across weekdays, as it must be - the
@@ -109,11 +108,11 @@ def add_lag_features(df: pd.DataFrame) -> pd.DataFrame:
     All operations are grouped by location so one city's history never leaks
     into another's. Rows at the start of each location's series will be NaN
     for the longer lags (up to 6 per location for the 6-hour pressure trend).
-    We leave these as NaN rather than fill - XGBoost handles missing values
+    I'll leave these as NaN rather than fill - XGBoost handles missing values
     natively, and downstream code can choose a fill strategy if needed.
 
     Leakage note: 'precipitation' and 'wind_gusts_10m' are components of the
-    'wet_veranda' target. Their rolling features are computed on *shifted*
+    'wet_veranda' target. Their rolling features are computed on shifted
     values so the current hour is excluded - otherwise we'd be using the
     target's own ingredients as features. Non-targeted component variables
     (pressure, humidity, clouds) have no such constraints.

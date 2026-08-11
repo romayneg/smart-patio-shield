@@ -3,15 +3,13 @@ Builds the label lookup table that bridges the tabular and image pipelines.
 
 For every (location, timestamp) in the processed feature set, records:
   - wet_veranda  : the 0/1 target (identical to the tabular models' target)
-  - split        : train / val / test, using the SAME chronological boundaries
+  - split        : train / val / test, using the same chronological boundaries
                    as src/data/splits.py, so all models are compared on
                    identical date ranges.
   - key          : "location|ISO-timestamp", matching the keys used inside the
                    GOES .npz day-files, so the Dataset can join image <-> label.
 
 Output: data/processed/image_labels.parquet (+ manifest)
-
-Run: python -m src.data.build_labels   (from project root)
 """
 
 import hashlib
